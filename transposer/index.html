@@ -58,7 +58,7 @@
                     continue;
                 }
 
-                const chords = matchUniques(/([A-G][^\|\s]*)+/g, lines[l]);
+                const chords = matchUniques(/([A-G][^\s:\|]*)+/g, lines[l]);
 
                 for (let chord of chords) {
                     const roots = matchUniques(/([A-G][#b]?)+/g, chord);
