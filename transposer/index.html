@@ -54,11 +54,13 @@
             const lines = chord_sheet.split(/\r?\n/);
 
             for (let l = 0; l < lines.length; l++) {
-                if (lines[l].indexOf('|') != 0) {
+                const line = /\|(.*?)+\|/g.exec(lines[l]);
+                
+                if (!line) {
                     continue;
                 }
-
-                const chords = matchUniques(/([A-G][^\s:\|]*)+/g, lines[l]);
+                
+                const chords = matchUniques(/[^\w]([A-G][^\s:\|]*)+/g, line[0]);
 
                 for (let chord of chords) {
                     const roots = matchUniques(/([A-G][#b]?)+/g, chord);
@@ -89,7 +91,7 @@
 
                         const chord_shift = chord.replaceAll(root, `[${shift % notes.length}]${accid}`);
 
-                        lines[l] = lines[l].replaceAll(chord, chord_shift); 
+                        lines[l] = lines[l].replace(chord, chord_shift); 
                     }
                 }
 
